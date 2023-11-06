@@ -1,0 +1,180 @@
+/*Name:	Kesari Kadam
+RollNo:  TEB30
+ASSIGNMENT NO 1(a) 
+Problem Description:0/1 knapsack using Greedy Approach.*/
+#include<iostream>
+using namespace std;
+
+class bag
+{
+	public:
+	double p;
+	double w,r;
+	double fraction;
+	void sort(bag a[],int n);
+	void logic(bag a[],int n,int capacity);
+	
+};
+void bag::sort(bag a[],int n)
+{
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<n-1-i;j++)
+		{
+			if(a[j].r<a[j+1].r)
+			{
+				bag temp=a[j];
+				a[j]=a[j+1];
+				a[j+1]=temp;
+			}
+		}
+	}
+}
+void bag::logic(bag a[],int n,int capacity)
+{
+	double TW=0;
+	double TP=0;
+	int i=0;
+	while(1)
+	{
+		if(TW<capacity) //still reamaining the capacity.
+		{
+			if(a[i].w<=(capacity-TW)) //if capacity of bag is not full,and whole element si present
+			{
+				TW+=a[i].w;
+				TP+=a[i].p;
+				a[i].fraction=1;
+			}
+			else  //if capacity of bag is not full,and whole element is not present then calculate fraction
+			{
+				a[i].fraction=((capacity-TW)/a[i].w);
+				TW+=a[i].w*a[i].fraction;
+				TP+=a[i].p*a[i].fraction;
+			}			
+		}
+		else
+		{
+			break;
+		}
+		i++;
+	}
+	cout<<"Total profit is:"<<TP<<endl;	
+}
+int main()
+{
+	
+	int capacity;
+	int n;
+	cout<<"Enter the capacity of the object:\n";
+	cin>>capacity;
+	cout<<"Enter the objects:";
+	cin>>n;
+	
+	bag obj[n];
+	for(int i=0;i<n;i++)
+	{
+		cout<<"Enter the profit of the object:";
+		cin>>obj[i].p;
+		cout<<"Enter the weight of the object:";
+		cin>>obj[i].w;
+		obj[i].fraction=0;
+	}
+	//calculate ratio
+	for(int i=0;i<n;i++)
+	{
+		obj[i].r=obj[i].p/obj[i].w;
+	}
+	//printing
+	cout<<"\nProfit\tWeight\tRatio\tFraction\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<obj[i].p<<"\t"<<obj[i].w<<"\t"<<obj[i].r<<"\t"<<obj[i].fraction<<"\n";
+	}
+	bag b;
+	b.sort(obj,n);
+	cout<<"After sorting:\n";
+	cout<<"\nProfit\tWeight\tRatio\tFraction\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<obj[i].p<<"\t"<<obj[i].w<<"\t"<<obj[i].r<<"\t"<<obj[i].fraction<<"\n";
+	}
+	cout<<"\n";
+	b.logic(obj,n,capacity);
+	cout<<"After updating the fraction:\n";
+	cout<<"\nProfit\tWeight\tRatio\tFraction\n";
+	for(int i=0;i<n;i++)
+	{
+		cout<<obj[i].p<<"\t"<<obj[i].w<<"\t"<<obj[i].r<<"\t"<<obj[i].fraction<<"\n";
+	}
+	return 0;	
+}
+
+/*Output:
+output:
+Enter the Size of Bag:7
+
+Enter the Weight Object 1 object:2
+
+Enter the Profit of Object 1 object:10
+
+Enter the Weight Object 2 object:3
+
+Enter the Profit of Object 2 object:5
+
+Enter the Weight Object 3 object:5
+
+Enter the Profit of Object 3 object:15
+
+Enter the Weight Object 4 object:7
+
+Enter the Profit of Object 4 object:7
+
+Enter the Weight Object 5 object:1
+
+Enter the Profit of Object 5 object:6
+
+Enter the Weight Object 6 object:4
+
+Enter the Profit of Object 6 object:18
+
+Enter the Weight Object 7 object:1
+
+Enter the Profit of Object 7 object:3
+
+Enter the Capacity of Bag:
+15
+
+Printing the Values:
+
+ID      Weight  Profit  Ratio   Fraction
+1       2       10      5       0
+2       3       5       1.66667 0
+3       5       15      3       0
+4       7       7       1       0
+5       1       6       6       0
+6       4       18      4.5     0
+7       1       3       3       0
+
+Printing the Values After Sorting:
+
+ID      Weight  Profit  Ratio   Fraction
+5       1       6       6       0
+1       2       10      5       0
+6       4       18      4.5     0
+3       5       15      3       0
+7       1       3       3       0
+2       3       5       1.66667 0
+4       7       7       1       0
+
+Total Profit is:55.3333
+
+Printing the Values After Updating Fraction:
+
+ID      Weight  Profit  Ratio   Fraction
+5       1       6       6       1
+1       2       10      5       1
+6       4       18      4.5     1
+3       5       15      3       1
+7       1       3       3       1
+2       3       5       1.66667 0.666667
+4       7       7       1       0*/

@@ -1,0 +1,163 @@
+/*name:Kesari Kadam
+Rol no-TIB30
+problem statement:Implement Belleman ford Algorithm*/
+
+#include<iostream>
+using namespace std;
+int v,e,source;
+int u,v1,w;
+int src[999],desti[999],wt[999],dist[999];
+
+void belleman(int v,int e,int source)
+{
+	for(int i=1;i<=v;i++)
+	{
+		dist[i]=999;
+	}
+	dist[source]=0;
+	for(int i=1;i<=v;i++)
+	{
+		cout<<"Iteration"<<i<<":"<<endl;
+		for(int j=0;j<e;j++)
+		{
+			u=src[j];
+			v1=desti[j];
+			w=wt[j];
+			
+			if(dist[u]!=999 && dist[u]+w<dist[v1])
+			{
+				dist[v1]=dist[u]+w;
+				cout<<"Relaxation of"<<i<<":"<<u<<"->"<<v1<<",new distance"<<dist[v1]<<endl;
+			}		
+		}
+		cout<<"distance after iteration is:"<<"\n";
+		for(int k=1;k<=v;k++)
+		{
+			cout<<"vertex"<<k<<":"<<dist[k]<<endl;
+		}
+	}
+	cout<<"Final distance is:"<<endl;
+	for(int i=1;i<=v;i++)
+	{
+		cout<<"vertex"<<i<<":"<<dist[i]<<endl;
+	}
+}
+int main()
+{
+	int v,e;
+	cout<<"Enter the number of vertices:";
+	cin>>v;
+	cout<<"Enter the number of edges:";
+	cin>>e;
+	
+	for(int i=0;i<e;i++)
+	{
+		cout<<"enter the source vertex:";
+		cin>>u;
+		cout<<"enter the destination vertex:";
+		cin>>v1;
+		cout<<"enter the weight of that(src to desti):";
+		cin>>w;
+		src[i]=u;
+		desti[i]=v1;
+		wt[i]=w;
+	}
+	cout<<"Enter the source:";
+	cin>>source;
+	
+	belleman(v,e,source);	
+	return 0;
+}
+/*Output:
+Enter the number of vertices:6
+Enter the number of edges:9
+enter the source vertex:1
+enter the destination vertex:2
+enter the weight of(src to desti):6
+enter the source vertex:1
+enter the destination vertex:3
+enter the weight of(src to desti):4
+enter the source vertex:1
+enter the destination vertex:4
+enter the weight of(src to desti):5
+enter the source vertex:2
+enter the destination vertex:5
+enter the weight of(src to desti):-1
+enter the source vertex:3
+enter the destination vertex:2
+enter the weight of(src to desti):-2
+enter the source vertex:4
+enter the destination vertex:3
+enter the weight of(src to desti):-2
+enter the source vertex:3
+enter the destination vertex:5
+enter the weight of(src to desti):3
+enter the source vertex:4
+enter the destination vertex:6
+enter the weight of(src to desti):-1
+enter the source vertex:5
+enter the destination vertex:6
+enter the weight of(src to desti):3
+Enter the source:1
+Iteration of1   Relaxation of1:1->2New Distance is:6
+Relaxation of1:1->3New Distance is:4
+Relaxation of1:1->4New Distance is:5
+Relaxation of1:2->5New Distance is:5
+Relaxation of1:3->2New Distance is:2
+Relaxation of1:4->3New Distance is:3
+Relaxation of1:4->6New Distance is:4
+After Iteration distance is:
+vertex1:0
+vertex2:2
+vertex3:3
+vertex4:5
+vertex5:5
+vertex6:4
+Iteration of2   Relaxation of2:2->5New Distance is:1
+Relaxation of2:3->2New Distance is:1
+After Iteration distance is:
+vertex1:0
+vertex2:1
+vertex3:3
+vertex4:5
+vertex5:1
+vertex6:4
+Iteration of3   Relaxation of3:2->5New Distance is:0
+Relaxation of3:5->6New Distance is:3
+After Iteration distance is:
+vertex1:0
+vertex2:1
+vertex3:3
+vertex4:5
+vertex5:0
+vertex6:3
+Iteration of4   After Iteration distance is:
+vertex1:0
+vertex2:1
+vertex3:3
+vertex4:5
+vertex5:0
+vertex6:3
+Iteration of5   After Iteration distance is:
+vertex1:0
+vertex2:1
+vertex3:3
+vertex4:5
+vertex5:0
+vertex6:3
+Iteration of6   After Iteration distance is:
+vertex1:0
+vertex2:1
+vertex3:3
+vertex4:5
+vertex5:0
+vertex6:3
+Final Distance is:
+Vertex1:0
+Vertex2:1
+Vertex3:3
+Vertex4:5
+Vertex5:0
+Vertex6:3
+
+*/
